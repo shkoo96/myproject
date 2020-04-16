@@ -1,10 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>기온별 옷차림 추천</title>
+     <!-- Required meta tags -->
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ 
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+     <link href="https://fonts.googleapis.com/css?family=Poor+Story&display=swap" rel="stylesheet">	
+ 
+     <style>
+    div.input_location {
+        width: 500px;
+        margin: 0px auto 50px auto;
+        padding: 30px;
+        border-radius: 10px;  
+    }
+     </style>
 </head>
-<body>
 
+<body>
+<h1>기온별 옷차림 추천</h1>
+
+
+<div class="input_location">
+<form>
+    <fieldset>
+    <div class="form-group">
+        <label for="exampleInputEmail1">위치를 입력해주세요</label>
+        <input type="text" class="form-control" id="input_location" aria-describedby="emailHelp">
+    </div>
+    </fieldset>
+</form>
+<button type="button" class="btn btn-info" onclick="onInfo()">날씨와 옷차림 알아보기</button>
+</div>
+
+<div class="show_weather">
+    <p class="weather_info">여기에 날씨가 들어가요</p>
+</div>
+
+
+
+
+<!-- JS -->		
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script>
+
+
+$(document).ready(function(){
+      $('.weather_info').html('');
+      
+    })
+
+function onInfo() {
+    let location = $("#input_location").val()
+    if(location=='') {
+        alert("위치를 입력하세요");
+        $("#input_location").focus();
+        return;
+      }
+    $.ajax({
+        type: "POST",
+        url: "/info",
+        data: {
+            location_give : location
+        },
+        success: function (response) {
+            if (response.result == "success") {
+                console.log(response)
+                console.log(response.weather.temp_now)
+                console.log(response.clothes.type)           
+    }
+}})}
+
+
+
+</script>
 </body>
 </html>
