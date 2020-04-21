@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>옷 저장소</title>
+     <!-- Required meta tags -->
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ 
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+     <link href="https://fonts.googleapis.com/css?family=Poor+Story&display=swap" rel="stylesheet">	
+ 
+</head>
+<body>
+    <h1>옷 저장소</h1>
+
+    <hr/>
+
+    <div class="add-box">
+
+
+      <h2>옷 추가하기</h2>
+        <div>max : <input type="number" id="input_max"/></div>
+        <div>min : <input type="number" id="input_min"/></div>
+        <div>type : <input type="string" id="input_type"/></div>
+        <div>mall : <input type="string" id="input_mall"/></div>
+        <div>url : <input type="url" id="input_url"/></div>
+        <button onclick="q1()">추가하기</button>
+
+
+    <!-- JS -->		
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script>
+
+function q1() {
+        let max = $("#input_max").val();
+        let min = $("#input_min").val();
+        let type = $("#input_type").val();
+        let mall = $("#input_mall").val();
+        let url = $("#input_url").val();
+
+          $.ajax ({
+              type: "POST",
+              url: "/clothes",
+              data: {
+                  max : max,
+                  min : min,
+                  type : type,
+                  mall: mall,
+                  url : url,
+              },
+              success: function(response) {
+                console.log(response);
+              }
+          })
+      }
+
+</script>
+</body>
+</html>
