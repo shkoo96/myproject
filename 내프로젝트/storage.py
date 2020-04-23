@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
 import requests
 import urllib.request
@@ -13,6 +13,9 @@ from bs4 import BeautifulSoup
 # imgUrl = info.find("img")['src']
 # img = info.find("img")['alt']
 # print(imgUrl, img)
+
+client = MongoClient('localhost', 27017)
+db= client.dbsparta
 
 def start_server():
     server = Flask("옷 저장소")
@@ -39,8 +42,14 @@ def start_server():
         info = soup.find("div", class_="keyImg")
         imgUrl = info.find("img")['src']
         img = info.find("img")['alt']
-        result = {'max': max, 'min': min, 'type': type, 'mall': mall, 'url': url, 'imgUrl': imgUrl, 'img': img}
-        return result
+
+        cloth = {'max': max, 'min': min, 'type': type, 'mall': mall, 'url': url, 'imgUrl': imgUrl, 'img': img}
+        db.clothes.insert_one(cloth)
+        return jsonify({'result':'success', 'msg': '옷 저장 성공!'})
+
+
+        # result = {'max': max, 'min': min, 'type': type, 'mall': mall, 'url': url, 'imgUrl': imgUrl, 'img': img}
+        # return result
 
         # soup = BeautifulSoup(html, 'html.parser')
         # # metatag 찾아서 name, img, url 가져오기
@@ -52,6 +61,11 @@ def start_server():
         # # name = info.get("alt")
         #
         # print(img)
+
+    @server.route('/clothes', methods=['GET'])
+    def read_clothes_list():
+        clothes = list(db.orders.find({}, {'_id': 0}))
+        return jsonify({'result': 'success', 'clothes': clothes})
 
     server.run('0.0.0.0', port=5000, debug=True)
 

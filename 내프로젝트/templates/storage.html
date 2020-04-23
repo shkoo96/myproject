@@ -10,6 +10,31 @@
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
      <link href="https://fonts.googleapis.com/css?family=Poor+Story&display=swap" rel="stylesheet">	
  
+     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico.png') }}">
+<style>
+  .add-box {
+      width: 300px;
+      margin: 0px auto;
+    }
+    .add-button {
+      text-align: center;
+      margin: 0px auto 2em auto;
+    }
+    div.storage {
+        margin: 10px 0 20px 0;
+      }
+    table {
+        border: 1px solid;
+        border-collapse: collapse;
+      }
+
+    td, th {
+        padding: 10px;
+        border: 1px solid;
+      }
+
+</style>
+
 </head>
 <body>
     <h1>옷 저장소</h1>
@@ -20,12 +45,139 @@
 
 
       <h2>옷 추가하기</h2>
-        <div>max : <input type="number" id="input_max"/></div>
-        <div>min : <input type="number" id="input_min"/></div>
-        <div>type : <input type="string" id="input_type"/></div>
-        <div>mall : <input type="string" id="input_mall"/></div>
-        <div>url : <input type="url" id="input_url"/></div>
-        <button onclick="q1()">추가하기</button>
+        <!-- <div>max : <input type="number" id="input_max"/></div> -->
+        <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">max</label>
+        </div>
+        <select class="custom-select" id="input_max">
+          <option selected value="0">--Select max--</option>
+          <option value="5">5</option>
+          <option value="9">9</option>
+          <option value="12">12</option>
+          <option value="17">17</option>
+          <option value="20">20</option>
+          <option value="23">23</option>
+          <option value="28">28</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+
+      <!-- <div>min : <input type="number" id="input_min"/></div> -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">min</label>
+        </div>
+        <select class="custom-select" id="input_min">
+          <option selected value="0">--Select min--</option>
+          <option value="-30">-30</option>
+          <option value="5">5</option>
+          <option value="9">9</option>
+          <option value="12">12</option>
+          <option value="17">17</option>
+          <option value="20">20</option>
+          <option value="23">23</option>
+          <option value="28">28</option>
+        </select>
+      </div>
+      
+      <!-- <div>type : <input type="string" id="input_type"/></div> -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">type</label>
+        </div>
+        <select class="custom-select" id="input_type">
+          <option selected value="0">--Select type--</option>
+        <optgroup label="Outer">
+          <option value="Cardigan">Cardigan</option>
+          <option value="Jacket">Jacket</option>
+          <option value="Coat">Coat</option>
+          <option value="Jumper/Hoodies">Jumper/Hoodies</option>
+          <option value="Padding">Padding</option>
+        </optgroup>
+          
+          <optgroup label="Top">
+            <option value="T-shirts">T-shirts</option>
+            <option value="Knit">Knit</option>
+            <option value="Shirts/Blouse">Shirts/Blouse</option>
+            <option value="Hoodies">Hoodies</option>
+            <option value="Sleeveless">Sleeveless</option>
+          </optgroup>
+          
+          <optgroup label="Pants">
+            <option value="Jeans">Jeans</option>
+            <option value="Pants">Pants</option>
+            <option value="Shorts">Shorts</option>
+            <option value="Sweatpants">Sweatpants</option>
+            <option value="Jumpsuits">Jumpsuits</option>
+          </optgroup>
+
+          <optgroup label="Skirts">
+            <option value="Mini skirts">Mini skirts</option>
+            <option value="Long skirts">Long skirts</option>
+          </optgroup>
+
+          <optgroup label="Dress">
+            <option value="Mini dress">Mini dress</option>
+            <option value="Long dress">Long dress</option>
+          </optgroup>
+
+          <optgroup label="etc">
+            <option value="muffler/gloves">muffler/gloves</option>
+            <option value="inner wear">inner wear</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">mall</span>
+        </div>
+        <input id="input_mall" type="string" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+      </div>
+
+        <!-- <div>Mall : <input type="string" id="input_mall"/></div> -->
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">URL</span>
+          </div>
+          <input id="input_url" type="url" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <!-- <div>url : <input type="url" id="input_url"/></div> -->
+        <div class= "add-button"><button onclick="q1()">추가하기</button></div>
+    </div>
+
+    <br>
+
+<div class="storage">
+  <table class="table">
+      <thead>
+          <tr>
+              <th scope="col">max</th>
+              <th scope="col">min</th>
+              <th scope="col">type</th>
+              <th scope="col">mall</th>
+              <th scope="col">URL</th>
+              <th scope="col">ImgName</th>
+              <th scope="col">ImgURL</th>
+          </tr>
+      </thead>
+      <tbody id="clothes-box">
+          <tr>
+              <td>max</td>
+              <td>min</td>
+              <td>type</td>              
+              <td>mall</td>
+              <td>URL</td>
+              <td>name</td>
+              <td>ImgURL</td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+
 
 
     <!-- JS -->		
@@ -35,12 +187,52 @@
 
 <script>
 
+$(document).ready(function(){
+      $('#clothes-box').html('');
+      listing();
+    })
+
 function q1() {
         let max = $("#input_max").val();
         let min = $("#input_min").val();
         let type = $("#input_type").val();
         let mall = $("#input_mall").val();
         let url = $("#input_url").val();
+
+        let mx = parseInt(max)
+        let mn = parseInt(min)
+
+      if (max==0) {
+        alert("Please select max");
+        $("#input_max").focus();
+        return;
+       }
+      if (min==0) {
+        alert("Please select min");
+        $("#input_min").focus();
+        return;
+       }
+      if (mx<=mn) {
+        alert("Max temperature should be higer than min temperature");
+        $("#input_max").focus();
+        return;
+      }
+      if (type<1) {
+        alert("Please select type");
+        $("#input_type").focus();
+        return;
+       }
+      if (mall=='') {
+        alert("Please input mall name");
+        $("#input_mall").focus();
+        return;
+      }
+      if (url=='') {
+        alert("Please input URl");
+        $("#input_url").focus();
+        return;
+      }
+      
 
           $.ajax ({
               type: "POST",
@@ -53,10 +245,45 @@ function q1() {
                   url : url,
               },
               success: function(response) {
-                console.log(response);
-              }
+                alert(response['msg']);
+              $("#input_max").val('');
+              $("#input_min").val('');
+              $("#input_type").val('');
+              $("#input_mall").val('');
+              $("#input_url").val('');
+              window.location.reload();              }
           })
       }
+
+      function make_clothes_list(max, min, type, mall, url, imgName, imgUrl) {
+            $('#clothes-box').append(`<tr>
+              <td>${max}</td>
+              <td>${min}</td>
+              <td>${type}</td>              
+              <td>${mall}</td>
+              <td>${url}</td>
+              <td>${imgName}</td>
+              <td>${imgUrl}</td>
+          </tr>`)
+        }
+      
+      function listing() {
+      $.ajax({
+        type: "GET",
+        url: "/clothes",
+        data: {},
+        success: function(response){
+          if (response['result']=='success') {
+            let clothes = response['clothes'];
+            for (let i=0; i< clothes.length; i++) {
+              make_clothes_list(clothes[i]['max'], clothes[i]['min'], clothes[i]['type'], clothes[i]['mall'], clothes[i]['url'], clothes[i]['imgName'], clothes[i]['imgUrl'])
+            }
+          } else {
+            alert('저장된 옷을 보여주지 못했습니다');
+          }
+        }
+      })
+    }
 
 </script>
 </body>

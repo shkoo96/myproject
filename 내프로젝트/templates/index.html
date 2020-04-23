@@ -9,7 +9,10 @@
      <!-- Bootstrap CSS -->
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
      <link href="https://fonts.googleapis.com/css?family=Poor+Story&display=swap" rel="stylesheet">	
- 
+    
+     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico.png') }}">
+
+
      <style>
     div.input_location {
         width: 500px;
@@ -21,7 +24,7 @@
 </head>
 
 <body>
-<h1>기온별 옷차림 추천</h1>
+<h1 style="text-align: center;">기온별 옷차림 추천</h1>
 
 
 <div class="input_location">
@@ -37,9 +40,31 @@
 </div>
 
 <div class="show_weather">
-    <p class="weather_info">여기에 날씨가 들어가요</p>
+    <h3 class="weather_info">오늘 날씨는요...</h3>
+    <div class="weather_wrapper">
+        <h4>현재 온도 </h4>
+        <p>weather_info</p>
+        <p>최고/최저  체감 온도</p>
+        
+    </div>
 </div>
 
+<div class="show_fashion">
+    <h3 class="fashion_info">이런 옷 어때요?</h3>
+  
+    <div class="clothes_wrapper">
+
+        <div class="card border-light" style="width: 18rem;">
+            <a href ="https://www.naver.com" id="url" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/ko/thumb/d/d4/%ED%8E%AD%EC%88%98.jpg/300px-%ED%8E%AD%EC%88%98.jpg" class="card-img-top" alt="..." id="imgUrl" style="width: 18rem; height: 18rem; object-fit: cover;"></a>
+            <div class="card-body">
+            <h5 class="card-text" id="img" style="text-align: center;"><a href="" id="url" target="_blank" >제품 이름</a></h5>
+            <p class="card-text" style="text-align: center;">쇼핑몰 이름</p>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 
 
@@ -52,8 +77,9 @@
 
 
 $(document).ready(function(){
-      $('.weather_info').html('');
-      
+      $('.show_weather').html('');
+      $('.fashion_info').hide();
+      $('.clothes_wrapper').html('');
     })
 
 function onInfo() {
@@ -73,10 +99,44 @@ function onInfo() {
             if (response.result == "success") {
                 console.log(response)
                 console.log(response.weather.temp_now)
-                console.log(response.clothes.type)           
-    }
+                console.log(response.clothes.length)  // 검색결과 나타난 옷의 갯수         
+                weather = response.weather;
+                show_weather_list(weather.location, weather.max_temp, weather.min_temp, weather.sensible_temp, weather.temp_now, weather.weather_info)
+
+                clothes = response.clothes
+            for (let i=0; i< clothes.length; i++) {
+                show_clothes_list(clothes[i].imgName, clothes[i].imgUrl, clothes[i].mall, clothes[i].url)
+            }
+     }
 }})}
 
+function show_weather_list(location, max_temp, min_temp, sensible_temp, temp_now, weather_info) {
+    $('.show_weather').append(`<h3 class="weather_info">오늘 ${location} 날씨는요...</h3>
+    <div class="weather_wrapper">
+        <h4>현재 온도 ${temp_now}℃</h4>
+        <p>${weather_info}</p>
+        <p>최고/최저 ${max_temp}/${min_temp}  체감 온도 ${sensible_temp}</p>
+        
+    </div>
+    `);
+
+}
+
+function show_clothes_list(imgName, imgUrl, mall, url) {
+    $('.fashion_info').show();
+
+
+    $('.clothes_wrapper').append(`
+
+    <div class="card border-light" style="width: 18rem;">
+            <a href = ${url} id="url" target="_blank">
+            <img src=${imgUrl} class="card-img-top" alt="..." id=${imgUrl} style="width: 18rem; height: 18rem; object-fit: cover;"></a>
+            <div class="card-body">
+            <h5 class="card-text" id="img" style="text-align: center;"><a href= ${url} id="url" target="_blank" > ${imgName} </a></h5>
+            <p class="card-text" style="text-align: center;">${mall}</p>
+            </div>
+        </div>`)
+}
 
 
 </script>
