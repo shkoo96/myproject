@@ -1,117 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <title>기온별 옷차림 추천</title>
-     <!-- Required meta tags -->
-     <meta charset="utf-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
- 
-     <!-- Bootstrap CSS -->
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-     <link href="https://fonts.googleapis.com/css?family=Poor+Story&display=swap" rel="stylesheet">	
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    //
+    <link
+      href="https://fonts.googleapis.com/css?family=Gothic+A1&display=swap"
+      rel="stylesheet"
+    />
     
-     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico.png') }}">
+    
 
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico.png') }}"
+    />
 
-     <style>
-    div.input_location {
-        width: 500px;
-        margin: 0px auto 50px auto;
-        padding: 30px;
-        border-radius: 10px;  
-    }
-     </style>
-</head>
+    <!--font awesome -->
+    <script src="https://kit.fontawesome.com/dc732fb8f7.js" crossorigin="anonymous"></script>
 
-<body>
-<h1 style="text-align: center;">기온별 옷차림 추천</h1>
-
-
-<div class="input_location">
-<form>
-    <fieldset>
-    <div class="form-group">
-        <label for="exampleInputEmail1">위치를 입력해주세요</label>
-        <input type="text" class="form-control" id="input_location" aria-describedby="emailHelp">
-    </div>
-    </fieldset>
-</form>
-<button type="button" class="btn btn-info" onclick="onInfo()">날씨와 옷차림 알아보기</button>
-</div>
-
-<div class="show_weather">
-    <h3 class="weather_info">오늘 날씨는요...</h3>
-    <div class="weather_wrapper">
-        <h4>현재 온도 </h4>
-        <p>weather_info</p>
-        <p>최고/최저  체감 온도</p>
-        
-    </div>
-</div>
-
-<div class="show_fashion">
-    <h3 class="fashion_info">이런 옷 어때요?</h3>
-  
-    <div class="clothes_wrapper">
-
-        <div class="card border-light" style="width: 18rem;">
-            <a href ="https://www.naver.com" id="url" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/ko/thumb/d/d4/%ED%8E%AD%EC%88%98.jpg/300px-%ED%8E%AD%EC%88%98.jpg" class="card-img-top" alt="..." id="imgUrl" style="width: 18rem; height: 18rem; object-fit: cover;"></a>
-            <div class="card-body">
-            <h5 class="card-text" id="img" style="text-align: center;"><a href="" id="url" target="_blank" >제품 이름</a></h5>
-            <p class="card-text" style="text-align: center;">쇼핑몰 이름</p>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-
-<!-- JS -->		
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-<script>
-
-
-$(document).ready(function(){
-      $('.show_weather').html('');
-      $('.fashion_info').hide();
-      $('.clothes_wrapper').html('');
-    })
-
-function onInfo() {
-    let location = $("#input_location").val()
-    if(location=='') {
-        alert("위치를 입력하세요");
-        $("#input_location").focus();
-        return;
+    <style>
+      * {
+        font-family: "Gothic A1", sans-serif;
       }
-    $.ajax({
-        type: "POST",
-        url: "/info",
-        data: {
-            location_give : location
-        },
-        success: function (response) {
+      .head {
+        color: white;
+        text-align: center;
+        background-image: url(/static/rainbow.jpg);
+        background-size: cover;
+        background-attachment: scroll;
+        background-position: center;
+        margin: auto;
+        max-width: 500px;
+        height: auto;
+        border-radius: 10px;
+        padding: 10px 0px 0px 0px;
+
+      }
+      div.input_location {
+        width: 500px;
+        margin: 0px auto 2em auto;
+        padding: 30px;
+        border-radius: 10px;
+      }
+      .show_weather {
+        width: 700px;
+        margin: auto;
+        text-align: center;
+      }
+      .fashion_info {
+        margin: 2em auto 1em auto;
+      }
+      .bring_info_button {
+        text-align: center;
+        margin: 0px auto;
+      }
+      .clothes_wrapper {
+        width: 100%;
+        margin: 0px auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <br />
+    <div class="head">
+      <h1><b>기온별 옷차림 추천</b></h1>
+      <p style="font-size: 20px;">현재 기온🌤에 따라 옷차림👗을 추천해주는 서비스</p>
+    </div>
+
+    <div class="input_location">
+      <form>
+        <fieldset>
+          <div class="form-group">
+            <label for="exampleInputEmail1">위치를 입력해주세요</label>
+            <input
+              type="text"
+              class="form-control"
+              id="input_location"
+              aria-describedby="emailHelp"
+            />
+          </div>
+        </fieldset>
+      </form>
+
+      <div class="bring_info_button">
+        <button type="button" class="btn btn-info" onclick="onInfo()">
+          날씨와 옷차림 알아보기
+        </button>
+      </div>
+    </div>
+
+    <div class="show_weather">
+      <h3 class="weather_info"></h3>
+      <div class="weather_wrapper">
+        <h4></h4>
+        <p></p>
+        <p></p>
+      </div>
+    </div>
+
+    <div class="show_fashion">
+      <h3 class="fashion_info" style="text-align: center;">이런 옷 어때요?</h3>
+      <div class="container">
+        <div class="clothes_wrapper row">
+          <div class="card border-light col-4" style="width: 18rem;">
+            <a href="" id="url" target="_blank">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/thumb/9/98/Blank_button.svg/1200px-Blank_button.svg.png"
+                class="card-img-top"
+                alt="..."
+                id="imgUrl"
+                style="width: 18rem; height: 18rem; object-fit: cover;"
+              />
+            </a>
+            <div class="card-body">
+              <h5 class="card-title" id="img" style="text-align: center;">
+                <a href="" id="url" target="_blank">제품 이름</a>
+              </h5>
+              <p class="card-text" style="text-align: center;">쇼핑몰 이름</p>
+            </div>
+          </div>
+
+          <div class="card border-light col-4" style="width: 18rem;">
+            <a href="" id="url" target="_blank">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/thumb/9/98/Blank_button.svg/1200px-Blank_button.svg.png"
+                class="card-img-top"
+                alt="..."
+                id="imgUrl"
+                style="width: 18rem; height: 18rem; object-fit: cover;"
+              />
+            </a>
+            <div class="card-body">
+              <h5 class="card-title" id="img" style="text-align: center;">
+                <a href="" id="url" target="_blank">제품 이름</a>
+              </h5>
+              <p class="card-text" style="text-align: center;">쇼핑몰 이름</p>
+            </div>
+          </div>
+
+          <div class="card border-light col-4" style="width: 18rem;">
+            <a href="" id="url" target="_blank">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/thumb/9/98/Blank_button.svg/1200px-Blank_button.svg.png"
+                class="card-img-top"
+                alt="..."
+                id="imgUrl"
+                style="width: 18rem; height: 18rem; object-fit: cover;"
+              />
+            </a>
+            <div class="card-body">
+              <h5 class="card-title" id="img" style="text-align: center;">
+                <a href="" id="url" target="_blank">제품 이름</a>
+              </h5>
+              <p class="card-text" style="text-align: center;">쇼핑몰 이름</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
+      integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(document).ready(function () {
+        $(".show_weather").html("");
+        $(".fashion_info").hide();
+        $(".clothes_wrapper").html("");
+        $('[data-toggle="tooltip"]').tooltip();
+      });
+
+      function onInfo() {
+        $(".show_weather").html("");
+
+        $(".clothes_wrapper").html("");
+
+        let location = $("#input_location").val();
+        if (location == "") {
+          alert("위치를 입력하세요");
+          $("#input_location").focus();
+          return;
+        }
+        $.ajax({
+          type: "POST",
+          url: "/info",
+          data: {
+            location_give: location,
+          },
+          success: function (response) {
             if (response.result == "success") {
-                console.log(response)
-                console.log(response.weather.temp_now)
-                console.log(response.clothes.length)  // 검색결과 나타난 옷의 갯수         
-                weather = response.weather;
-                show_weather_list(weather.location, weather.max_temp, weather.min_temp, weather.sensible_temp, weather.temp_now, weather.weather_info)
+              console.log(response);
+              console.log(response.weather.temp_now);
+              console.log(response.clothes.length); // 검색결과 나타난 옷의 갯수
+              weather = response.weather;
+              show_weather_list(
+                weather.location,
+                weather.max_temp,
+                weather.min_temp,
+                weather.sensible_temp,
+                weather.temp_now,
+                weather.weather_info
+              );
 
-                clothes = response.clothes
-            for (let i=0; i< clothes.length; i++) {
-                show_clothes_list(clothes[i].imgName, clothes[i].imgUrl, clothes[i].mall, clothes[i].url)
+              clothes = response.clothes;
+              for (let i = 0; i < clothes.length; i++) {
+                show_clothes_list(
+                  clothes[i].imgName,
+                  clothes[i].imgUrl,
+                  clothes[i].mall,
+                  clothes[i].url
+                );
+              }
             }
-     }
-}})}
+            else {
+                alert(response.alert);
+            }
+          },
+        });
+      }
 
-function show_weather_list(location, max_temp, min_temp, sensible_temp, temp_now, weather_info) {
-    $('.show_weather').append(`<h3 class="weather_info">오늘 ${location} 날씨는요...</h3>
+      function show_weather_list(
+        location,
+        max_temp,
+        min_temp,
+        sensible_temp,
+        temp_now,
+        weather_info
+      ) {
+        $(".show_weather").html("");
+
+        $(".show_weather")
+          .append(`<h3 class="weather_info">오늘 <span style= "color: #5882FA">${location}</span> 날씨는요...</h3>
     <div class="weather_wrapper">
         <h4>현재 온도 ${temp_now}℃</h4>
         <p>${weather_info}</p>
@@ -119,26 +263,21 @@ function show_weather_list(location, max_temp, min_temp, sensible_temp, temp_now
         
     </div>
     `);
+      }
 
-}
+      function show_clothes_list(imgName, imgUrl, mall, url) {
+        $(".clothes_wrapper").append(`
 
-function show_clothes_list(imgName, imgUrl, mall, url) {
-    $('.fashion_info').show();
-
-
-    $('.clothes_wrapper').append(`
-
-    <div class="card border-light" style="width: 18rem;">
-            <a href = ${url} id="url" target="_blank">
-            <img src=${imgUrl} class="card-img-top" alt="..." id=${imgUrl} style="width: 18rem; height: 18rem; object-fit: cover;"></a>
+    <div class="card border-light col-4" style="width: 18rem;">
+            <a href = "${url}" id="url" target="_blank" data-toggle="tooltip" data-placement="true" title="${imgName}">
+            <img src="${imgUrl}" class="card-img-top" alt="..." id="imgUrl" style="width: 18rem; height: 18rem; object-fit: cover;"></a>
             <div class="card-body">
-            <h5 class="card-text" id="img" style="text-align: center;"><a href= ${url} id="url" target="_blank" > ${imgName} </a></h5>
+            <h5 class="card-title" id="img" style="text-align: center;"><a href= "${url}" id="url" target="_blank" > ${imgName} </a></h5>
             <p class="card-text" style="text-align: center;">${mall}</p>
             </div>
-        </div>`)
-}
-
-
-</script>
-</body>
+        </div>`);
+        $(".fashion_info").show();
+      }
+    </script>
+  </body>
 </html>
